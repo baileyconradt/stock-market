@@ -1,11 +1,16 @@
 import React from 'react';
 import './App.css';
-
+//import {restClient} from "polygon.io";
 import { Button, Container, Row, Col, Table, InputGroup, FormControl, Card } from 'react-bootstrap';
-
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
+
+const finnhub = require('finnhub');
+const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+api_key.apiKey = "sandbox_c0b2k4n48v6sc0gs2p8g" // Replace this
+//actual: c0b2k4n48v6sc0gs2p80
+const finnhubClient = new finnhub.DefaultApi();
 
 const series = [
   {
@@ -36,12 +41,35 @@ const series = [
 
 
 function App() {
+
+ 
+
+
+function testStock(){
+
+  console.log("clicked");
+
+  finnhubClient.companyBasicFinancials("AAPL", "margin", (error, data, response) => {
+    console.log(data)
+});
+
+ //const rest = restClient("S_QPT2wNwIkT_aYgmU4gyA_ZV3cCfzV_zS_M_4");
+  // rest.forex
+  // .previousClose()
+  // .then(res => console.log(res))
+  // .catch(err => console.log(err));
+}
+
+
+  
+
   return (
     <div className="App">
       <Container fluid>
-        <Row><Col><Card>
+        <Row><Col><Card className="m-2">
   <Card.Header>BCONomics</Card.Header></Card></Col></Row>
-        <Row>
+  <Row><Button onClick={testStock}>Test</Button></Row>
+        {/* <Row>
           <Col>
             <InputGroup className="mb-3">
               <InputGroup.Prepend>
@@ -53,7 +81,7 @@ function App() {
                 aria-describedby="basic-addon1"
               />
             </InputGroup></Col>
-        </Row>
+        </Row> */}
         <Row>
           <Col><Table striped bordered hover variant="dark">
             <tbody>
